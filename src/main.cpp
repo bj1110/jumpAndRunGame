@@ -5,7 +5,6 @@
 #include <string>
 #include <sstream>
 
-import logger; 
 
 struct ShaderProgrammSource{
     std::string VertexSource;
@@ -128,8 +127,8 @@ int main() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6* sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
-
-    auto [vertexShader, fragmentShader] = parseShader("../res/shaders/basic.shader");
+    std::string shaderPath = std::string(PROJECT_SOURCE_DIR) + "/res/shaders/basic.shader";
+    auto [vertexShader, fragmentShader] = parseShader(shaderPath);
 
     unsigned int shader = CreateShader(vertexShader, fragmentShader);
     glUseProgram(shader);

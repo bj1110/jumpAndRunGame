@@ -1,5 +1,4 @@
-export module logger;
-
+module; 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -8,8 +7,11 @@ export module logger;
 #include <source_location>
 
 
+
+export module logger;
+
 export namespace GL_Logger{
-    export class logger{
+    class logger{
 
     public:
         template<typename Func, typename ... Args>
