@@ -8,6 +8,7 @@
 #include "Logger.hpp" 
 #include "IndexBuffer.hpp"
 #include "VertexBuffer.hpp"
+#include "VertexArray.hpp"
 
 
 struct ShaderProgrammSource{
@@ -119,10 +120,18 @@ int main() {
     };
 
 
+    VertexArray va;
     VertexBuffer vb (positions, 4*2*sizeof(float));
+    VertexBufferLayout layout;
+    layout.push<float>(2, GL_FALSE);
+    va.AddBuffer(vb, layout);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0); 
-    glEnableVertexAttribArray(0);
+
+    // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0);  
+    // // // An vorletzter Stelle kann auch 0 stehen, da keine anderen Daten in dem VB sind ==tightly packed
+    // glEnableVertexAttribArray(0);
+
+    
 
 
     IndexBuffer ib(indices, 6);
@@ -131,7 +140,7 @@ int main() {
     auto [vertexShader, fragmentShader] = parseShader(shaderPath);
 
     unsigned int shader = CreateShader(vertexShader, fragmentShader);
-    glUseProgram(shader);
+    GLCall(glUseProgram(shader));
 
     int location = glGetUniformLocation(shader, "u_Color");
     if(location == -1){
@@ -151,6 +160,10 @@ int main() {
         GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
         // glDrawArrays(GL_TRIANGLES, 0, 3); 
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        va.bind();
+        ib.bind(); 
+
+
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
         glfwSwapBuffers(window);
         glfwPollEvents();
