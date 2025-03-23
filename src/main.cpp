@@ -97,6 +97,7 @@ int main() {
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSwapInterval(1); 
 
     if (glewInit() != GLEW_OK) {
         std::cerr << "GLEW konnte nicht initialisiert werden!\n";
@@ -118,7 +119,7 @@ int main() {
     };
 
 
-    VertexBuffer vb (positions, 4*2* sizeof(float));
+    VertexBuffer vb (positions, 4*2*sizeof(float));
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0); 
     glEnableVertexAttribArray(0);
@@ -132,14 +133,28 @@ int main() {
     unsigned int shader = CreateShader(vertexShader, fragmentShader);
     glUseProgram(shader);
 
+    int location = glGetUniformLocation(shader, "u_Color");
+    if(location == -1){
+        std::cerr << "uniform not found "<<std::endl; 
+    }
+    float r = 0.1f;
+    float dr= 0.01f; 
+    GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
+
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-
+        if(r>=1 || r<=0){
+            dr=-dr;
+        } 
+        r+=dr;
+        GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
         // glDrawArrays(GL_TRIANGLES, 0, 3); 
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
         glfwSwapBuffers(window);
         glfwPollEvents();
+
     }
 
     glDeleteProgram(shader); 
