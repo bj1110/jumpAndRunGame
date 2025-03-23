@@ -12,10 +12,10 @@ find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # Executable erstellen
-add_executable(OpenGLWSL src/main.cpp)
+# add_executable(OpenGLWSL src/main.cpp)
 
-# add_executable(OpenGLWSL src/main.cpp src/logger.cpp)
-# target_include_directories(OpenGLWSL PRIVATE ${CMAKE_SOURCE_DIR}/src)
+add_executable(OpenGLWSL src/main.cpp src/logger.cpp)
+target_include_directories(OpenGLWSL PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Include Directories für GLEW & GLFW setzen
 include_directories(${GLEW_INCLUDE_DIRS})
