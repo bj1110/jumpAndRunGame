@@ -6,6 +6,8 @@
 #include <sstream>
 
 #include "Logger.hpp" 
+#include "IndexBuffer.hpp"
+#include "VertexBuffer.hpp"
 
 
 struct ShaderProgrammSource{
@@ -116,18 +118,13 @@ int main() {
     };
 
 
-    unsigned int buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 2* 6* sizeof(float), positions, GL_STATIC_DRAW);
+    VertexBuffer vb (positions, 4*2* sizeof(float));
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0); 
     glEnableVertexAttribArray(0);
 
-    unsigned int ibo;
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6* sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+    IndexBuffer ib(indices, 6);
 
     std::string shaderPath = std::string(PROJECT_SOURCE_DIR) + "/res/shaders/basic.shader";
     auto [vertexShader, fragmentShader] = parseShader(shaderPath);
