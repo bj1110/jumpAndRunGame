@@ -14,7 +14,7 @@ find_package(glfw3 REQUIRED)
 # Executable erstellen
 # add_executable(OpenGLWSL src/main.cpp)
 
-add_executable(OpenGLWSL src/main.cpp src/logger.cpp)
+add_executable(OpenGLWSL src/main.cpp src/Logger.cpp)
 target_include_directories(OpenGLWSL PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Include Directories für GLEW & GLFW setzen
