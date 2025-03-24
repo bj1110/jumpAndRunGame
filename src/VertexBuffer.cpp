@@ -6,6 +6,7 @@
 
 VertexBuffer::VertexBuffer(const void *data, unsigned int size)
 {
+    // std::cout << "Constructor VertexBuffer called" <<std::endl; 
     GLCall(glGenBuffers(1, &m_rendererID));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_rendererID));
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
@@ -13,6 +14,7 @@ VertexBuffer::VertexBuffer(const void *data, unsigned int size)
 
 VertexBuffer::~VertexBuffer()
 {
+    // std::cout << "Destructor VertexBuffer called" <<std::endl; 
     GLCall(glDeleteBuffers(1, &m_rendererID));
 }
 

@@ -29,8 +29,12 @@ private:
     unsigned int m_stride; 
 
 public:
-    VertexBufferLayout(){}
-    ~VertexBufferLayout(){} 
+    VertexBufferLayout(){
+        // std::cout<< "VertexBufferLayout Constructor called"<<std::endl;
+        }
+        ~VertexBufferLayout(){
+        // std::cout<< "VertexBufferLayout Destructor called"<<std::endl;
+        }
 
     template<typename T>
     inline void push(unsigned int count, unsigned int normalized);

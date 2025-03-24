@@ -165,6 +165,9 @@ int main() {
 
 
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+            va.unbind();
+            ib.unbind();
+            
             glfwSwapBuffers(window);
             glfwPollEvents();
 

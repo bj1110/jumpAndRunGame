@@ -7,6 +7,7 @@
 
 IndexBuffer::IndexBuffer(const unsigned int *data, unsigned int count) : m_count(count)
 {
+    // std::cout << "IndexBuffer Constructor called" <<std::endl; 
     assert(sizeof(unsigned int ) == sizeof(GLuint) && "unsigned int != GLuint"); 
     GLCall(glGenBuffers(1, &m_rendererID));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID));
@@ -15,6 +16,7 @@ IndexBuffer::IndexBuffer(const unsigned int *data, unsigned int count) : m_count
 
 IndexBuffer::~IndexBuffer()
 {
+    // std::cout << "IndexBuffer Destructor called" <<std::endl; 
     GLCall(glDeleteBuffers(1, &m_rendererID));
 }
 
