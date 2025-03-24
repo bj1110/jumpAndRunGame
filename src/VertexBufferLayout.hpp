@@ -26,11 +26,11 @@ struct VertexBufferElement{
 class VertexBufferLayout{
 private:
     std::vector<VertexBufferElement> m_Elements;
-    unsigned int m_stride; 
+    unsigned int m_stride{0}; 
 
 public:
     VertexBufferLayout(){
-        // std::cout<< "VertexBufferLayout Constructor called"<<std::endl;
+        // std::cout<< "VertexBufferLayout Constructor called, stride: "<<m_stride<<std::endl;
         }
         ~VertexBufferLayout(){
         // std::cout<< "VertexBufferLayout Destructor called"<<std::endl;
