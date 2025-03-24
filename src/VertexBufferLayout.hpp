@@ -45,7 +45,8 @@ public:
 
 template<typename T>
 inline void VertexBufferLayout::push(unsigned int count, unsigned int normalized){
-    static_assert(false);
+    // static_assert(false);
+    std::cout << "chose wrong method "<< std::endl; 
 }
 
 template<>

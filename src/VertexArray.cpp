@@ -22,8 +22,8 @@ void VertexArray::AddBuffer(const VertexBuffer &vb, const VertexBufferLayout &la
     for(unsigned int i=0; i<elements.size(); i++){
         const auto& element= elements[i];
         GLCall(glEnableVertexAttribArray(i));
-        std::cout << "Element["<<i<<"]:"<<element.count<< " "<<element.type<<" size: "<< VertexBufferElement::GetSizeOfType(element.type)<<" "<< element.normalized<<std::endl; 
-        std::cout<< offset << reinterpret_cast<void*>(offset) << std::endl; 
+        // std::cout << "Element["<<i<<"]:"<<element.count<< " "<<element.type<<" size: "<< VertexBufferElement::GetSizeOfType(element.type)<<" "<< element.normalized<<std::endl; 
+        // std::cout<< offset << reinterpret_cast<void*>(offset) << std::endl; 
         // TODO: nächste Zeile drawt gar nichts; übernächste nur 1 der 2 dreiecke
         GLCall(glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.getStride(), reinterpret_cast<void*>(offset)));  
         // glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.getStride(), nullptr);  
