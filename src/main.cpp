@@ -106,71 +106,70 @@ int main() {
     }
 
     // Bis hier ist alles initialisierung gewesen
+    {
+        float positions[]={
+            -0.5f, -0.5f, 
+            -0.5f, 0.5f,
+            0.5f, 0.5f,
+            0.5f, -0.5f
+        };
 
-    float positions[]={
-        -0.5f, -0.5f, 
-        -0.5f, 0.5f,
-        0.5f, 0.5f,
-        0.5f, -0.5f
-    };
-
-    unsigned int indices[]={
-        0, 1, 2,
-        2, 3, 0
-    };
-
-
-    VertexArray va;
-    VertexBuffer vb (positions, 4*2*sizeof(float));
-    VertexBufferLayout layout;
-    layout.push<float>(2, GL_FALSE);
-    va.AddBuffer(vb, layout);
+        unsigned int indices[]={
+            0, 1, 2,
+            2, 3, 0
+        };
 
 
-    // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0);  
-    // // // An vorletzter Stelle kann auch 0 stehen, da keine anderen Daten in dem VB sind ==tightly packed
-    // glEnableVertexAttribArray(0);
-
-    
-
-
-    IndexBuffer ib(indices, 6);
-
-    std::string shaderPath = std::string(PROJECT_SOURCE_DIR) + "/res/shaders/basic.shader";
-    auto [vertexShader, fragmentShader] = parseShader(shaderPath);
-
-    unsigned int shader = CreateShader(vertexShader, fragmentShader);
-    GLCall(glUseProgram(shader));
-
-    int location = glGetUniformLocation(shader, "u_Color");
-    if(location == -1){
-        std::cerr << "uniform not found "<<std::endl; 
-    }
-    float r = 0.1f;
-    float dr= 0.01f; 
-    GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
+        VertexArray va;
+        VertexBuffer vb (positions, 4*2*sizeof(float));
+        VertexBufferLayout layout;
+        layout.push<float>(2, GL_FALSE);
+        va.AddBuffer(vb, layout);
 
 
-    while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
-        if(r>=1 || r<=0){
-            dr=-dr;
-        } 
-        r+=dr;
+        // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2* sizeof(float), 0);  
+        // // // An vorletzter Stelle kann auch 0 stehen, da keine anderen Daten in dem VB sind ==tightly packed
+        // glEnableVertexAttribArray(0);
+
+        
+
+
+        IndexBuffer ib(indices, 6);
+
+        std::string shaderPath = std::string(PROJECT_SOURCE_DIR) + "/res/shaders/basic.shader";
+        auto [vertexShader, fragmentShader] = parseShader(shaderPath);
+
+        unsigned int shader = CreateShader(vertexShader, fragmentShader);
+        GLCall(glUseProgram(shader));
+
+        int location = glGetUniformLocation(shader, "u_Color");
+        if(location == -1){
+            std::cerr << "uniform not found "<<std::endl; 
+        }
+        float r = 0.1f;
+        float dr= 0.01f; 
         GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
-        // glDrawArrays(GL_TRIANGLES, 0, 3); 
-        // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-        va.bind();
-        ib.bind(); 
 
 
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        while (!glfwWindowShouldClose(window)) {
+            glClear(GL_COLOR_BUFFER_BIT);
+            if(r>=1 || r<=0){
+                dr=-dr;
+            } 
+            r+=dr;
+            GLCall(glUniform4f(location, r, 0.1f, 0.1f, 1.0f)); 
+            // glDrawArrays(GL_TRIANGLES, 0, 3); 
+            // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            va.bind();
+            ib.bind(); 
 
+
+            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+
+        } 
     }
-
-    glDeleteProgram(shader); 
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;

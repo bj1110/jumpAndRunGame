@@ -19,7 +19,6 @@ struct VertexBufferElement{
         }
         std::cerr<< "wrong type - no size found "<< std::endl; 
         return 0; 
-    
     }
 };
 
