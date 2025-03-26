@@ -3,8 +3,8 @@
 
 class IndexBuffer{
 private:
-    unsigned int m_rendererID;
-    unsigned int m_count; 
+    unsigned int m_rendererID{0};
+    unsigned int m_count{0}; 
 
 public:
     IndexBuffer(const unsigned int* data, unsigned int size);

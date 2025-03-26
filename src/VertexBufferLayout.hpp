@@ -7,9 +7,9 @@
 
 
 struct VertexBufferElement{
-    unsigned int type;
-    unsigned int count;
-    unsigned int normalized;
+    unsigned int type {0};
+    unsigned int count{0};
+    unsigned int normalized {0};
 
     static unsigned int GetSizeOfType(unsigned int type){
         switch(type)
