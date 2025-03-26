@@ -10,6 +10,7 @@
 #include "VertexBuffer.hpp"
 #include "VertexArray.hpp"
 #include "Shader.hpp"
+#include "Renderer.hpp"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -61,6 +62,7 @@ int main() {
         layout.push<float>(2, GL_FALSE);
         va.AddBuffer(vb, layout);        
         IndexBuffer ib(indices, 6);
+        Renderer renderer; 
 
 
         std::string shaderPath="/res/shaders/basic.shader";
@@ -74,18 +76,16 @@ int main() {
         
         
         while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT);
+            renderer.clear();
             if(r>=1 || r<=0){
                 dr=-dr;
             } 
             r+=dr;
             shader.updateUniform4f("u_Color", r, 0.1f, 0.1f, 1.0f); 
-            va.bind();
-            ib.bind(); 
 
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-            va.unbind();
-            ib.unbind();
+            renderer.draw(va, ib, shader);
+            // GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
 
             glfwSwapBuffers(window);
             glfwPollEvents();

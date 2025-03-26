@@ -30,7 +30,3 @@ void IndexBuffer::unbind() const
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
-inline unsigned int IndexBuffer::getCount() const 
-{
-    return m_count;
-}
