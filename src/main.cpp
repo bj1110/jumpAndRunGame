@@ -84,12 +84,6 @@ int main() {
         VertexArray va2;
         VertexBuffer vb2(positions2, 8* sizeof(float));
         va2.AddBuffer(vb2, layout); 
-        // VertexBufferLayout layout2;
-        // layout2.push<float>(2, GL_FALSE);
-        // va2.AddBuffer(vb2, layout2);
-        // Shader shader2 {shaderPath};
-        // shader2.updateUniform4f("u_Color", 0.9f, 0.9f, 0.9f, 0.3f);
-
         
         
         while (!glfwWindowShouldClose(window)) {
@@ -106,7 +100,6 @@ int main() {
             shader.updateUniform4f("u_Color", 0.9f, 0.9f, 0.9f, 0.3f);
 
             renderer.draw(va2, ib, shader);
-            // GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
 
             glfwSwapBuffers(window);
