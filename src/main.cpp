@@ -41,6 +41,9 @@ int main() {
         return -1;
     }
 
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
     // Bis hier ist alles initialisierung gewesen
     {
         float positions[]={
@@ -55,6 +58,12 @@ int main() {
             2, 3, 0
         };
 
+        float positions2[]={
+            -0.9f, -0.9f,
+            -0.3f, -0.9f,
+            -0.3f, -0.3f,
+            -0.9f, -0.3f
+        };
 
         VertexArray va;
         VertexBuffer vb (positions, 4*2*sizeof(float));
@@ -63,16 +72,24 @@ int main() {
         va.AddBuffer(vb, layout);        
         IndexBuffer ib(indices, 6);
         Renderer renderer; 
-
-
+        
         std::string shaderPath="/res/shaders/basic.shader";
         Shader shader {shaderPath};
-
-
-        
+    
         float r = 0.1f;
         float dr= 0.01f; 
         shader.updateUniform4f("u_Color", r, 0.1f, 0.1f, 1.0f); 
+        
+        
+        VertexArray va2;
+        VertexBuffer vb2(positions2, 8* sizeof(float));
+        va2.AddBuffer(vb2, layout); 
+        // VertexBufferLayout layout2;
+        // layout2.push<float>(2, GL_FALSE);
+        // va2.AddBuffer(vb2, layout2);
+        // Shader shader2 {shaderPath};
+        // shader2.updateUniform4f("u_Color", 0.9f, 0.9f, 0.9f, 0.3f);
+
         
         
         while (!glfwWindowShouldClose(window)) {
@@ -81,9 +98,14 @@ int main() {
                 dr=-dr;
             } 
             r+=dr;
+            shader.bind(); 
             shader.updateUniform4f("u_Color", r, 0.1f, 0.1f, 1.0f); 
-
+            
             renderer.draw(va, ib, shader);
+             
+            shader.updateUniform4f("u_Color", 0.9f, 0.9f, 0.9f, 0.3f);
+
+            renderer.draw(va2, ib, shader);
             // GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
 
