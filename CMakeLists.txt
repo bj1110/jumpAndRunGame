@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 # Executable erstellen
 # add_executable(OpenGLWSL src/main.cpp)
@@ -22,6 +23,6 @@ include_directories(${GLEW_INCLUDE_DIRS})
 include_directories(${glfw3_INCLUDE_DIRS})
 
 # Richtige Bibliotheken linken
-target_link_libraries(OpenGLWSL OpenGL::GL ${GLEW_LIBRARIES} glfw)
+target_link_libraries(OpenGLWSL PRIVATE glm::glm OpenGL::GL ${GLEW_LIBRARIES} glfw)
 
 target_compile_definitions(OpenGLWSL PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
